@@ -1,0 +1,317 @@
+    param_grid = {
+        'recency_strength':      [0.20, 0.35, 0.50, 1.0, 3.0],                       -> C: 3.00     A: 0.35    B: 1.0
+        'dow_shrinkage':         [0.05, 0.10, 0.15, 0.20, 0.25],                           0.15        0.25       0.05
+        'interaction_shrinkage': [0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50],               0.25        0.35       0.20
+        'seasonal_exponent':     [1.0, 1.025, 1.05],                                       0.00        1.02       1.00
+        'trend_dampening':       [0.70, 0.80, 0.85, 0.90],                                 0.80        0.83       0.70
+        'forward_lift_daily':    [0.0, 0.0025, 0.005],                                     0.00        0.0025     0.00
+        'level_lookback_days':   [60, 90],                                                 60          60         60
+        'trend_seasonal_tilt':   [0.0, 0.08, 0.15],                                        0.00        0.08       0.00
+    }
+
+
+Total param combos to test per month: 864
+
+======================================================================
+  Tuning 2025-01  |  Actual total: $165,761,576
+======================================================================
+  BEST  |  Monthly err: +0.00%  |  Abs err: 0.00%
+    recency_strength             = 0.2
+    dow_shrinkage                = 0.25
+    interaction_shrinkage        = 0.2
+    seasonal_exponent            = 1.05
+    trend_dampening              = 0.7
+    forward_lift_daily           = 0.0
+    level_lookback_days          = 60
+    trend_seasonal_tilt          = 0.08
+
+======================================================================
+  Tuning 2025-02  |  Actual total: $175,734,244
+======================================================================
+  BEST  |  Monthly err: -2.46%  |  Abs err: 2.46%
+    recency_strength             = 1.0
+    dow_shrinkage                = 0.1
+    interaction_shrinkage        = 0.35
+    seasonal_exponent            = 1.05
+    trend_dampening              = 0.7
+    forward_lift_daily           = 0.005
+    level_lookback_days          = 90
+    trend_seasonal_tilt          = 0.15
+
+======================================================================
+  Tuning 2025-03  |  Actual total: $181,623,181
+======================================================================
+  BEST  |  Monthly err: -0.59%  |  Abs err: 0.59%
+    recency_strength             = 1.0
+    dow_shrinkage                = 0.1
+    interaction_shrinkage        = 0.2
+    seasonal_exponent            = 1.05
+    trend_dampening              = 0.7
+    forward_lift_daily           = 0.0
+    level_lookback_days          = 90
+    trend_seasonal_tilt          = 0.0
+
+======================================================================
+  Tuning 2025-04  |  Actual total: $194,492,552
+======================================================================
+  BEST  |  Monthly err: -0.32%  |  Abs err: 0.32%
+    recency_strength             = 1.0
+    dow_shrinkage                = 0.1
+    interaction_shrinkage        = 0.2
+    seasonal_exponent            = 1.0
+    trend_dampening              = 0.7
+    forward_lift_daily           = 0.005
+    level_lookback_days          = 90
+    trend_seasonal_tilt          = 0.15
+
+======================================================================
+  Tuning 2025-05  |  Actual total: $174,537,762
+======================================================================
+  BEST  |  Monthly err: +0.03%  |  Abs err: 0.03%
+    recency_strength             = 1.0
+    dow_shrinkage                = 0.1
+    interaction_shrinkage        = 0.2
+    seasonal_exponent            = 1.0
+    trend_dampening              = 0.7
+    forward_lift_daily           = 0.005
+    level_lookback_days          = 90
+    trend_seasonal_tilt          = 0.08
+
+======================================================================
+  Tuning 2025-06  |  Actual total: $179,300,643
+======================================================================
+  BEST  |  Monthly err: -3.56%  |  Abs err: 3.56%
+    recency_strength             = 1.0
+    dow_shrinkage                = 0.1
+    interaction_shrinkage        = 0.2
+    seasonal_exponent            = 1.05
+    trend_dampening              = 0.7
+    forward_lift_daily           = 0.005
+    level_lookback_days          = 90
+    trend_seasonal_tilt          = 0.15
+
+======================================================================
+  Tuning 2025-07  |  Actual total: $193,088,074
+======================================================================
+  BEST  |  Monthly err: -5.78%  |  Abs err: 5.78%
+    recency_strength             = 1.0
+    dow_shrinkage                = 0.1
+    interaction_shrinkage        = 0.5
+    seasonal_exponent            = 1.05
+    trend_dampening              = 0.7
+    forward_lift_daily           = 0.005
+    level_lookback_days          = 90
+    trend_seasonal_tilt          = 0.15
+
+======================================================================
+  Tuning 2025-08  |  Actual total: $199,246,002
+======================================================================
+  BEST  |  Monthly err: -2.68%  |  Abs err: 2.68%
+    recency_strength             = 1.0
+    dow_shrinkage                = 0.1
+    interaction_shrinkage        = 0.2
+    seasonal_exponent            = 1.05
+    trend_dampening              = 0.7
+    forward_lift_daily           = 0.005
+    level_lookback_days          = 90
+    trend_seasonal_tilt          = 0.15
+
+======================================================================
+  Tuning 2025-09  |  Actual total: $228,926,998
+======================================================================
+  BEST  |  Monthly err: +4.96%  |  Abs err: 4.96%
+    recency_strength             = 1.0
+    dow_shrinkage                = 0.25
+    interaction_shrinkage        = 0.5
+    seasonal_exponent            = 1.0
+    trend_dampening              = 0.9
+    forward_lift_daily           = 0.0
+    level_lookback_days          = 60
+    trend_seasonal_tilt          = 0.0
+
+======================================================================
+  Tuning 2025-10  |  Actual total: $227,532,649
+======================================================================
+  BEST  |  Monthly err: -0.03%  |  Abs err: 0.03%
+    recency_strength             = 0.35
+    dow_shrinkage                = 0.05
+    interaction_shrinkage        = 0.35
+    seasonal_exponent            = 1.0
+    trend_dampening              = 0.83
+    forward_lift_daily           = 0.0
+    level_lookback_days          = 60
+    trend_seasonal_tilt          = 0.08
+
+======================================================================
+  BEST PARAMS for 2025-10-15 → 2025-11-15
+======================================================================
+  Signed err : -2.97%
+  Abs err    : 2.97%
+  Actual     : $232,823,021
+  Forecast   : $225,915,762
+
+    recency_strength             = 1.0
+    dow_shrinkage                = 0.05
+    interaction_shrinkage        = 0.35
+    seasonal_exponent            = 1.05
+    trend_dampening              = 0.7
+    forward_lift_daily           = 0.005
+    level_lookback_days          = 60
+    trend_seasonal_tilt          = 0.15
+
+======================================================================
+  Tuning 2025-11  |  Actual total: $195,281,169
+======================================================================
+  BEST  |  Monthly err: +4.38%  |  Abs err: 4.38%
+    recency_strength             = 0.35
+    dow_shrinkage                = 0.25
+    interaction_shrinkage        = 0.35
+    seasonal_exponent            = 1.0
+    trend_dampening              = 0.83
+    forward_lift_daily           = 0.0
+    level_lookback_days          = 60
+    trend_seasonal_tilt          = 0.0
+
+======================================================================
+  BEST PARAMS for 2025-11-15 → 2025-12-15
+======================================================================
+  Signed err : +0.01%
+  Abs err    : 0.01%
+  Actual     : $220,485,251
+  Forecast   : $220,497,065
+
+    recency_strength             = 0.35
+    dow_shrinkage                = 0.1
+    interaction_shrinkage        = 0.5
+    seasonal_exponent            = 1.0
+    trend_dampening              = 0.83
+    forward_lift_daily           = 0.0025
+    level_lookback_days          = 90
+    trend_seasonal_tilt          = 0.0=
+
+======================================================================
+  Tuning 2025-12  |  Actual total: $231,728,711
+======================================================================
+  BEST  |  Monthly err: -14.59%  |  Abs err: 14.59%
+    recency_strength             = 1.0
+    dow_shrinkage                = 0.25
+    interaction_shrinkage        = 0.2
+    seasonal_exponent            = 1.05
+    trend_dampening              = 0.7
+    forward_lift_daily           = 0.005
+    level_lookback_days          = 60
+    trend_seasonal_tilt          = 0.15
+
+======================================================================
+  Tuning 2026-01  |  Actual total: $186,217,022
+======================================================================
+  BEST  |  Monthly err: -0.01%  |  Abs err: 0.01%
+    recency_strength             = 0.2
+    dow_shrinkage                = 0.25
+    interaction_shrinkage        = 0.5
+    seasonal_exponent            = 1.05
+    trend_dampening              = 0.7
+    forward_lift_daily           = 0.005
+    level_lookback_days          = 90
+    trend_seasonal_tilt          = 0.0
+
+======================================================================
+  BEST PARAMS for 2026-01-15 → 2026-02-15
+======================================================================
+  Signed err : -0.82%
+  Abs err    : 0.82%
+  Actual     : $208,363,281
+  Forecast   : $206,657,688
+
+    recency_strength             = 1.0
+    dow_shrinkage                = 0.05
+    interaction_shrinkage        = 0.5
+    seasonal_exponent            = 1.05
+    trend_dampening              = 0.7
+    forward_lift_daily           = 0.005
+    level_lookback_days          = 90
+    trend_seasonal_tilt          = 0.15
+
+======================================================================
+  Tuning 2026-02  |  Actual total: $205,220,387
+======================================================================
+  BEST  |  Monthly err: -0.09%  |  Abs err: 0.09%
+    recency_strength             = 1.0
+    dow_shrinkage                = 0.25
+    interaction_shrinkage        = 0.35
+    seasonal_exponent            = 1.02
+    trend_dampening              = 0.83
+    forward_lift_daily           = 0.0
+    level_lookback_days          = 60
+    trend_seasonal_tilt          = 0.0
+
+======================================================================
+  BEST PARAMS for 2026-02-15 → 2026-03-15
+======================================================================
+  Signed err : +0.02%
+  Abs err    : 0.02%
+  Actual     : $201,089,136
+  Forecast   : $201,122,472
+
+    recency_strength             = 0.2
+    dow_shrinkage                = 0.25
+    interaction_shrinkage        = 0.2
+    seasonal_exponent            = 1.0
+    trend_dampening              = 0.83
+    forward_lift_daily           = 0.005
+    level_lookback_days          = 60
+    trend_seasonal_tilt          = 0.0
+
+======================================================================
+  Tuning 2026-03  |  Actual total: $246,341,013
+======================================================================
+  BEST  |  Monthly err: -0.47%  |  Abs err: 0.47%
+    recency_strength             = 1.0
+    dow_shrinkage                = 0.05
+    interaction_shrinkage        = 0.2
+    seasonal_exponent            = 1.02
+    trend_dampening              = 0.83
+    forward_lift_daily           = 0.0
+    level_lookback_days          = 60
+    trend_seasonal_tilt          = 0.08
+
+======================================================================
+  BEST PARAMS for 2026-03-15 → 2026-04-15
+======================================================================
+  Signed err : -0.01%
+  Abs err    : 0.01%
+  Actual     : $269,234,755
+  Forecast   : $269,206,579
+
+    recency_strength             = 1.0
+    dow_shrinkage                = 0.25
+    interaction_shrinkage        = 0.2
+    seasonal_exponent            = 1.05
+    trend_dampening              = 0.83
+    forward_lift_daily           = 0.005
+    level_lookback_days          = 90
+    trend_seasonal_tilt          = 0.0
+
+
+           recency  dampening  lift    lookback  tilt
+           -------  ---------  ------  --------  ----
+Jan 25:    0.20     0.70       0.000   60        0.08   ← January override
+Feb 25:    1.00     0.70       0.005   90        0.15   ┐
+Mar 25:    1.00     0.70       0.000   90        0.00   │
+Apr 25:    1.00     0.70       0.005   90        0.15   │ Regime 1
+May 25:    1.00     0.70       0.005   90        0.08   │ "Steady State"
+Jun 25:    1.00     0.70       0.005   90        0.15   │
+Jul 25:    1.00     0.70       0.005   90        0.15   │
+Aug 25:    1.00     0.70       0.005   90        0.15   ┘
+Sep 25:    1.00     0.90       0.000   60        0.00   ← Transition
+Oct 25:    0.35     0.83       0.000   60        0.08   ┐
+Nov 25:    0.35     0.83       0.000   60        0.00   │ Regime 2
+Jan 26:    0.20     0.70       0.005   90        0.00   ← January override
+Feb 26:    1.00     0.83       0.000   60        0.00   │ Regime 2
+Mar 26:    1.00     0.83       0.000   60        0.08   ┘ continues
+
+
+
+
+
+
