@@ -1,31 +1,61 @@
 WITH app_counts AS (
     SELECT 
-        CAST(unified_app_date AS DATE) AS dt,
+        dt,
         channel,
-        COUNT(*) AS application_count
-    FROM marketing_sandbox.dbo.SDS WITH (NOLOCK)
-    WHERE unified_app_date IS NOT NULL
-    GROUP BY CAST(unified_app_date AS DATE), channel
+        COUNT(DISTINCT loan_number) AS application_count,
+        SUM(loan_amount) AS application_volume
+    FROM (
+        SELECT DISTINCT
+            CAST(b.unified_app_date AS DATE) AS dt,
+            b.channel,
+            b.loan_number,
+            a.loan_amount
+        FROM marketing_sandbox.dbo.SDS b WITH (NOLOCK)
+        JOIN marketing_sandbox.dbo.skinny_core a
+            ON a.loan_number = b.loan_number
+        WHERE b.unified_app_date IS NOT NULL
+    ) x
+    GROUP BY dt, channel
 ),
 
 uw_event_counts AS (
     SELECT 
-        CAST(underwriting_submission_date AS DATE) AS dt,
+        dt,
         channel,
-        COUNT(*) AS underwriting_submission_events
-    FROM marketing_sandbox.dbo.SDS WITH (NOLOCK)
-    WHERE underwriting_submission_date IS NOT NULL
-    GROUP BY CAST(underwriting_submission_date AS DATE), channel
+        COUNT(DISTINCT loan_number) AS underwriting_submission_events,
+        SUM(loan_amount) AS underwriting_submission_event_volume
+    FROM (
+        SELECT DISTINCT
+            CAST(b.underwriting_submission_date AS DATE) AS dt,
+            b.channel,
+            b.loan_number,
+            a.loan_amount
+        FROM marketing_sandbox.dbo.SDS b WITH (NOLOCK)
+        JOIN marketing_sandbox.dbo.skinny_core a
+            ON a.loan_number = b.loan_number
+        WHERE b.underwriting_submission_date IS NOT NULL
+    ) x
+    GROUP BY dt, channel
 ),
 
 approval_event_counts AS (
     SELECT 
-        CAST(initial_conditional_approval_date AS DATE) AS dt,
+        dt,
         channel,
-        COUNT(*) AS approval_events
-    FROM marketing_sandbox.dbo.SDS WITH (NOLOCK)
-    WHERE initial_conditional_approval_date IS NOT NULL
-    GROUP BY CAST(initial_conditional_approval_date AS DATE), channel
+        COUNT(DISTINCT loan_number) AS approval_events,
+        SUM(loan_amount) AS approval_event_volume
+    FROM (
+        SELECT DISTINCT
+            CAST(b.initial_conditional_approval_date AS DATE) AS dt,
+            b.channel,
+            b.loan_number,
+            a.loan_amount
+        FROM marketing_sandbox.dbo.SDS b WITH (NOLOCK)
+        JOIN marketing_sandbox.dbo.skinny_core a
+            ON a.loan_number = b.loan_number
+        WHERE b.initial_conditional_approval_date IS NOT NULL
+    ) x
+    GROUP BY dt, channel
 ),
 
 base AS (
@@ -39,34 +69,58 @@ base AS (
         COUNT(DISTINCT CASE WHEN b.funded_date IS NOT NULL THEN a.loan_number END) AS funded_loan_count,
         SUM(CASE WHEN b.funded_date IS NOT NULL THEN a.loan_amount ELSE 0 END) AS funded_loan_volume,
 
-        -- status-based
-        COUNT(DISTINCT CASE 
-            WHEN b.underwriting_submission_date IS NOT NULL 
-            THEN a.loan_number 
-        END) AS underwriting_submission_count,
+        -- status-based counts
+        COUNT(DISTINCT CASE WHEN b.underwriting_submission_date IS NOT NULL THEN a.loan_number END)
+            AS underwriting_submission_count,
 
-        COUNT(DISTINCT CASE 
-            WHEN b.initial_conditional_approval_date IS NOT NULL 
-            THEN a.loan_number 
-        END) AS initial_conditional_approval_count,
+        COUNT(DISTINCT CASE WHEN b.initial_conditional_approval_date IS NOT NULL THEN a.loan_number END)
+            AS initial_conditional_approval_count,
 
-        -- event-based
+        -- event-based counts + volumes
         ISNULL(uw.underwriting_submission_events, 0) AS underwriting_submission_events,
-        ISNULL(ap.approval_events, 0) AS approval_events,
-        ISNULL(ac.application_count, 0) AS application_count,
+        ISNULL(uw.underwriting_submission_event_volume, 0) AS underwriting_submission_event_volume,
 
-        -- pull-through
+        ISNULL(ap.approval_events, 0) AS approval_events,
+        ISNULL(ap.approval_event_volume, 0) AS approval_event_volume,
+
+        ISNULL(ac.application_count, 0) AS application_count,
+        ISNULL(ac.application_volume, 0) AS application_volume,
+
+        -- pull-through (count)
         CAST(
             100.0 * COUNT(DISTINCT CASE WHEN b.funded_date IS NOT NULL THEN a.loan_number END)
-            / COUNT(DISTINCT a.loan_number)
+            / NULLIF(COUNT(DISTINCT a.loan_number), 0)
             AS DECIMAL(10,2)
         ) AS pull_through_pct_count,
 
+        -- pull-through (volume)
         CAST(
             100.0 * SUM(CASE WHEN b.funded_date IS NOT NULL THEN a.loan_amount ELSE 0 END)
             / NULLIF(SUM(a.loan_amount), 0)
             AS DECIMAL(10,2)
-        ) AS pull_through_pct_volume
+        ) AS pull_through_pct_volume,
+
+        -- =========================
+        -- AVERAGE LOAN SIZE METRICS
+        -- =========================
+
+        CAST(
+            ISNULL(ac.application_volume, 0) * 1.0
+            / NULLIF(ac.application_count, 0)
+            AS DECIMAL(18,2)
+        ) AS avg_application_loan_size,
+
+        CAST(
+            ISNULL(uw.underwriting_submission_event_volume, 0) * 1.0
+            / NULLIF(uw.underwriting_submission_events, 0)
+            AS DECIMAL(18,2)
+        ) AS avg_underwriting_submission_loan_size,
+
+        CAST(
+            ISNULL(ap.approval_event_volume, 0) * 1.0
+            / NULLIF(ap.approval_events, 0)
+            AS DECIMAL(18,2)
+        ) AS avg_approval_loan_size
 
     FROM marketing_sandbox.dbo.skinny_core a WITH (NOLOCK)
 
@@ -97,14 +151,16 @@ base AS (
         CAST(a.filedt AS DATE),
         a.channel,
         ac.application_count,
+        ac.application_volume,
         uw.underwriting_submission_events,
-        ap.approval_events
+        uw.underwriting_submission_event_volume,
+        ap.approval_events,
+        ap.approval_event_volume
 )
 
 SELECT
     b.*,
 
-    -- Calendar fields
     c.Biz_Day,
     c.Biz_Day_Remaining_in_Month,
     c.Biz_Days_in_Month,
@@ -119,5 +175,4 @@ LEFT JOIN marketing_sandbox.dbo.Calendar c
 
 WHERE c.Is_Weekday = 1
 
-ORDER BY 
-    b.filedt;
+ORDER BY b.filedt;
